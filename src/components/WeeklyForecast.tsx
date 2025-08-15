@@ -33,7 +33,7 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ forecastData, isLoading
 
   return (
     <div className="weekly-forecast">
-      <h2>7일 일기예보</h2>
+      <h2>주간 일기예보</h2>
       <div className="forecast-list">
         {dailyForecasts.map((forecast, index) => {
           const weather = forecast.weather[0];
