@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <style>
+      .sun { fill: #FFD700; }
+      .cloud { fill: #FFFFFF; stroke: #87CEEB; stroke-width: 2; }
+      .bg { fill: #87CEEB; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100" height="100" class="bg" rx="15"/>
+  
+  <!-- Sun -->
+  <circle cx="35" cy="35" r="18" class="sun"/>
+  
+  <!-- Sun rays -->
+  <g class="sun">
+    <rect x="33" y="8" width="4" height="10" rx="2"/>
+    <rect x="58" y="33" width="10" height="4" rx="2"/>
+    
+    <rect x="50" y="18" width="4" height="6" rx="2" transform="rotate(45 52 21)"/>
+    <rect x="18" y="50" width="4" height="6" rx="2" transform="rotate(-45 20 53)"/>
+    <rect x="12" y="33" width="8" height="4" rx="2"/>
+    <rect x="33" y="58" width="4" height="8" rx="2"/>
+  </g>
+  
+  <!-- Cloud -->
+  <g class="cloud">
+    <circle cx="45" cy="65" r="12"/>
+    <circle cx="55" cy="62" r="10"/>
+    <circle cx="65" cy="65" r="8"/>
+    <circle cx="75" cy="68" r="6"/>
+    <rect x="37" y="65" width="44" height="15" rx="7"/>
+  </g>
+</svg>
