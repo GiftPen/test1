@@ -5,10 +5,13 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #74b9ff, #0984e3);
   min-height: 100vh;
+  min-height: 100dvh; /* iOS Safari 개선 */
   color: #333;
+  -webkit-text-size-adjust: 100%; /* iOS 텍스트 크기 조정 방지 */
+  -webkit-font-smoothing: antialiased; /* iOS 폰트 렌더링 개선 */
 }
 
 .app {
@@ -16,6 +19,7 @@ body {
   margin: 0 auto;
   padding: 20px;
   min-height: 100vh;
+  min-height: 100dvh; /* iOS Safari 개선 */
 }
 
 .app-header {
@@ -61,6 +65,9 @@ body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent; /* iOS 터치 하이라이트 제거 */
+  -webkit-touch-callout: none; /* iOS 롱 터치 메뉴 방지 */
+  user-select: none; /* 텍스트 선택 방지 */
 }
 
 .my-location-button:hover {
@@ -95,6 +102,9 @@ body {
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s;
+  -webkit-tap-highlight-color: transparent; /* iOS 터치 하이라이트 제거 */
+  -webkit-touch-callout: none; /* iOS 롱 터치 메뉴 방지 */
+  user-select: none; /* 텍스트 선택 방지 */
 }
 
 .location-button:hover {

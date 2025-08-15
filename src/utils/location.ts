@@ -34,7 +34,7 @@ export const getCurrentLocation = (): Promise<any> => {
       },
       {
         enableHighAccuracy: false, // 더 빠른 응답을 위해 false로 변경
-        timeout: 10000, // 10초로 증가
+        timeout: 15000, // iOS에서 더 긴 시간 필요
         maximumAge: 60000, // 1분으로 감소
       }
     );
