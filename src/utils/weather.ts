@@ -120,7 +120,7 @@ export const fetchCurrentWeather = async (location: WeatherLocation): Promise<We
 
 export const fetchWeatherByCity = async (cityName: string): Promise<WeatherData> => {
   // 도시 이름을 좌표로 변환 (Nominatim API 사용 - 무료)
-  const geocodeUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(cityName)}&format=json&limit=1`;
+  const geocodeUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(cityName)}&format=json&limit=1&addressdetails=1`;
   
   try {
     const geocodeResponse = await fetch(geocodeUrl);
@@ -137,7 +137,7 @@ export const fetchWeatherByCity = async (cityName: string): Promise<WeatherData>
     const lon = parseFloat(geocodeData[0].lon);
     const displayName = geocodeData[0].display_name.split(',')[0];
     
-    const countryCode = geocodeData[0].address?.country_code?.toUpperCase() || 'XX';
+    const countryCode = geocodeData[0].country_code?.toUpperCase() || geocodeData[0].address?.country_code?.toUpperCase() || 'XX';
     
     const location: WeatherLocation = {
       lat,

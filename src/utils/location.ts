@@ -53,7 +53,7 @@ export const getSeoulLocation = (): WeatherLocation => {
 // 좌표를 실제 지역명으로 변환하는 역지오코딩 함수
 export const reverseGeocode = async (lat: number, lon: number): Promise<{ name: string; country: string }> => {
   try {
-    const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=ko`;
+    const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=ko&addressdetails=1`;
     const response = await fetch(url);
     
     if (!response.ok) {
@@ -62,7 +62,7 @@ export const reverseGeocode = async (lat: number, lon: number): Promise<{ name: 
     
     const data = await response.json();
     
-    const countryCode = data.address?.country_code?.toUpperCase() || 'XX';
+    const countryCode = data.country_code?.toUpperCase() || data.address?.country_code?.toUpperCase() || 'XX';
     
     // 한국어 지역명 추출
     if (data.address) {
