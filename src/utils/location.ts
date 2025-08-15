@@ -46,11 +46,12 @@ export const getSeoulLocation = (): WeatherLocation => {
     lat: 37.5665,
     lon: 126.9780,
     name: '서울',
+    country: 'KR',
   };
 };
 
 // 좌표를 실제 지역명으로 변환하는 역지오코딩 함수
-export const reverseGeocode = async (lat: number, lon: number): Promise<string> => {
+export const reverseGeocode = async (lat: number, lon: number): Promise<{ name: string; country: string }> => {
   try {
     const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=ko`;
     const response = await fetch(url);
@@ -60,6 +61,8 @@ export const reverseGeocode = async (lat: number, lon: number): Promise<string> 
     }
     
     const data = await response.json();
+    
+    const countryCode = data.address?.country_code?.toUpperCase() || 'XX';
     
     // 한국어 지역명 추출
     if (data.address) {
@@ -72,20 +75,32 @@ export const reverseGeocode = async (lat: number, lon: number): Promise<string> 
       ].filter(Boolean);
       
       if (locationParts.length > 0) {
-        return locationParts.slice(0, 2).join(' '); // 최대 2개 부분만 사용
+        return {
+          name: locationParts.slice(0, 2).join(' '), // 최대 2개 부분만 사용
+          country: countryCode
+        };
       }
     }
     
     // fallback: display_name에서 첫 번째 부분 사용
     if (data.display_name) {
       const firstPart = data.display_name.split(',')[0];
-      return firstPart.trim();
+      return {
+        name: firstPart.trim(),
+        country: countryCode
+      };
     }
     
-    return '현재 위치';
+    return {
+      name: '현재 위치',
+      country: countryCode
+    };
   } catch (error) {
     console.error('역지오코딩 오류:', error);
-    return '현재 위치';
+    return {
+      name: '현재 위치',
+      country: 'XX'
+    };
   }
 };
 

@@ -42,12 +42,13 @@ const App: React.FC = () => {
         getCurrentLocation()
           .then(async position => {
             // 역지오코딩으로 실제 지역명 가져오기
-            const locationName = await reverseGeocode(position.coords.latitude, position.coords.longitude);
+            const locationInfo = await reverseGeocode(position.coords.latitude, position.coords.longitude);
             
             const userLocation: WeatherLocation = {
               lat: position.coords.latitude,
               lon: position.coords.longitude,
-              name: `${locationName} (현재위치)`,
+              name: `${locationInfo.name} (현재위치)`,
+              country: locationInfo.country,
             };
             
             // 새로운 위치의 날씨 데이터를 직접 로드
@@ -129,6 +130,7 @@ const App: React.FC = () => {
         lat: weather.coord.lat,
         lon: weather.coord.lon,
         name: weather.name,
+        country: weather.sys.country,
       };
       
       setCurrentWeather(weather);
@@ -161,12 +163,13 @@ const App: React.FC = () => {
       setHourlyError(null);
 
       const position = await getCurrentLocation();
-      const locationName = await reverseGeocode(position.coords.latitude, position.coords.longitude);
+      const locationInfo = await reverseGeocode(position.coords.latitude, position.coords.longitude);
       
       const userLocation: WeatherLocation = {
         lat: position.coords.latitude,
         lon: position.coords.longitude,
-        name: `${locationName} (현재위치)`,
+        name: `${locationInfo.name} (현재위치)`,
+        country: locationInfo.country,
       };
 
       await loadWeatherData(userLocation);

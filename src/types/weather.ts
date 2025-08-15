@@ -94,6 +94,7 @@ export interface WeatherLocation {
   lat: number;
   lon: number;
   name: string;
+  country?: string;
 }
 
 export interface HourlyForecastData {

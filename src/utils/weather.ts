@@ -103,7 +103,7 @@ export const fetchCurrentWeather = async (location: WeatherLocation): Promise<We
         deg: data.current_weather.winddirection
       },
       sys: {
-        country: 'KR',
+        country: location.country || 'XX',
         sunrise: Date.now() / 1000,
         sunset: Date.now() / 1000 + 12 * 3600
       },
@@ -137,10 +137,13 @@ export const fetchWeatherByCity = async (cityName: string): Promise<WeatherData>
     const lon = parseFloat(geocodeData[0].lon);
     const displayName = geocodeData[0].display_name.split(',')[0];
     
+    const countryCode = geocodeData[0].address?.country_code?.toUpperCase() || 'XX';
+    
     const location: WeatherLocation = {
       lat,
       lon,
-      name: displayName
+      name: displayName,
+      country: countryCode
     };
     
     return await fetchCurrentWeather(location);
@@ -200,7 +203,7 @@ export const fetchWeatherForecast = async (location: WeatherLocation): Promise<F
       list: forecastList,
       city: {
         name: location.name,
-        country: 'KR'
+        country: location.country || 'XX'
       }
     };
     
