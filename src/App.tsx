@@ -217,7 +217,7 @@ const App: React.FC = () => {
         <LocationInput 
           onLocationChange={handleLocationChange}
           onMyLocationClick={handleMyLocationClick}
-          currentLocation={formatLocationName(currentLocation.name)}
+          currentLocation={formatLocationName(currentLocation.name, currentLocation.country)}
         />
       </header>
 

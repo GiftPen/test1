@@ -1,6 +1,7 @@
 import React from 'react';
 import { WeatherData } from '../types/weather';
 import { getWeatherIconUrl, formatTemperature, formatTime } from '../utils/weather';
+import { formatLocationName } from '../utils/location';
 
 interface WeatherDisplayProps {
   weatherData: WeatherData | null;
@@ -37,7 +38,7 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData, isLoading,
     <div className="weather-display">
       <div className="weather-main">
         <div className="weather-location">
-          <h1>{weatherData.name}, {weatherData.sys.country}</h1>
+          <h1>{formatLocationName(weatherData.name, weatherData.sys.country)}</h1>
         </div>
         
         <div className="weather-current">

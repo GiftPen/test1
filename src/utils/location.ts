@@ -104,14 +104,89 @@ export const reverseGeocode = async (lat: number, lon: number): Promise<{ name: 
   }
 };
 
+// 국가 코드를 풀네임으로 변환하는 함수
+export const getCountryFullName = (countryCode: string): string => {
+  const countryMap: { [key: string]: string } = {
+    // 아시아
+    'KR': 'Korea',
+    'JP': 'Japan',
+    'CN': 'China',
+    'IN': 'India',
+    'TH': 'Thailand',
+    'VN': 'Vietnam',
+    'SG': 'Singapore',
+    'MY': 'Malaysia',
+    'ID': 'Indonesia',
+    'PH': 'Philippines',
+    
+    // 유럽
+    'FR': 'France',
+    'DE': 'Germany',
+    'IT': 'Italy',
+    'ES': 'Spain',
+    'GB': 'United Kingdom',
+    'NL': 'Netherlands',
+    'BE': 'Belgium',
+    'CH': 'Switzerland',
+    'AT': 'Austria',
+    'SE': 'Sweden',
+    'NO': 'Norway',
+    'DK': 'Denmark',
+    'FI': 'Finland',
+    'PL': 'Poland',
+    'CZ': 'Czech Republic',
+    'RU': 'Russia',
+    
+    // 북미
+    'US': 'United States',
+    'CA': 'Canada',
+    'MX': 'Mexico',
+    
+    // 남미
+    'BR': 'Brazil',
+    'AR': 'Argentina',
+    'CL': 'Chile',
+    'PE': 'Peru',
+    'CO': 'Colombia',
+    
+    // 오세아니아
+    'AU': 'Australia',
+    'NZ': 'New Zealand',
+    
+    // 아프리카
+    'ZA': 'South Africa',
+    'EG': 'Egypt',
+    'NG': 'Nigeria',
+    'KE': 'Kenya',
+    
+    // 중동
+    'AE': 'UAE',
+    'SA': 'Saudi Arabia',
+    'IL': 'Israel',
+    'TR': 'Turkey',
+    'IR': 'Iran',
+  };
+  
+  return countryMap[countryCode.toUpperCase()] || countryCode;
+};
+
 export const formatLocationName = (name: string, country?: string): string => {
-  // (현재위치) 라벨이 있는 경우 그대로 표시
-  if (name.includes('(현재위치)')) {
-    return name;
+  if (country) {
+    const fullCountryName = getCountryFullName(country);
+    
+    // KR인 경우 국가명을 표시하지 않음 (한국 내 지역은 국가명 불필요)
+    if (country === 'KR') {
+      return name;
+    }
+    
+    // (현재위치) 라벨이 있는 경우 라벨을 유지하면서 국가명 추가
+    if (name.includes('(현재위치)')) {
+      const baseName = name.replace(' (현재위치)', '');
+      return `${baseName}, ${fullCountryName} (현재위치)`;
+    }
+    
+    return `${name}, ${fullCountryName}`;
   }
   
-  if (country && country !== 'KR') {
-    return `${name}, ${country}`;
-  }
   return name;
 };
